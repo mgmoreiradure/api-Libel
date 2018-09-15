@@ -3,6 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var mongoosePaginate = require('mongoose-pagination');
 var Course = require('../models/course');
+var Software = require('../models/software');
 
 
 function saveCourse(req, res){
@@ -16,6 +17,7 @@ function saveCourse(req, res){
     course.level= params.level;
     course.software= JSON.parse(params.software);                                           
     course.active=false;
+    course.promotion= false;
             
     course.save((err, courseStored)=>{
         if(err){            
@@ -108,10 +110,11 @@ function uploadImageSmall(req, res){
 function getCourses(req, res){
     var page = req.params.page;
     var itemsPerPage=6;
-
+    // {Software:'5b97ccccd8afb83e685e8c7d'}
     // Course.find({software: { _id: '5b97cd3ad8afb83e685e8c83' }}).populate('categories').populate('level').populate('type').populate('software').sort('createdAt').paginate(page, itemsPerPage ,(err, coursesStored, total)=>{
     Course.find().populate('categories').populate('level').populate('type').populate('software').sort('createdAt').paginate(page, itemsPerPage ,(err, coursesStored, total)=>{
         if (err) {
+            console.log(err);
              res.status(500).send({message:'Error al actualizar  el curso'});
         }else{
             if (coursesStored.length <=0){
@@ -122,6 +125,23 @@ function getCourses(req, res){
         }
     }); 
 }
+// function getHome(req, res){
+//     var page = req.params.page;
+//     var itemsPerPage=6;
+
+//     // Course.find({software: { _id: '5b97cd3ad8afb83e685e8c83' }}).populate('categories').populate('level').populate('type').populate('software').sort('createdAt').paginate(page, itemsPerPage ,(err, coursesStored, total)=>{
+//     Course.find().populate('categories').populate('level').populate('type').populate('software').sort('createdAt').paginate(page, itemsPerPage ,(err, coursesStored, total)=>{
+//         if (err) {
+//              res.status(500).send({message:'Error al actualizar  el curso'});
+//         }else{
+//             if (coursesStored.length <=0){
+//                 res.status(200).send({message: 'No se encuentran cursos'});
+//             }else{
+//                 res.status(200).send({courses: coursesStored, total: total});
+//             }               
+//         }
+//     }); 
+// }
 
 
 

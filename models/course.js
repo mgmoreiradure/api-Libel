@@ -21,7 +21,8 @@ var CourseSchema = Schema({
     startDay:{type: Date, default: Date.now},
     endDay: Date, 
     createdAt: {type: Date, default: Date.now},
-    active: Boolean
+    active: Boolean,
+    promotion: Boolean
 });
 
 module.exports = mongoose.model('Course',CourseSchema);
