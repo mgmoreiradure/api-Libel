@@ -69,7 +69,7 @@ function updateUser(req, res){
 function uploadImage(req, res){
     var userId= req.params.id;
     var file_name = 'No subido...';
-
+    var fileOld;
     if(req.files){
         var file_path = req.files.image.path;
         var file_split= file_path.split('\\');
@@ -78,16 +78,37 @@ function uploadImage(req, res){
         var ext_split = file_name.split('\.');
         var file_ext= ext_split[1].toLowerCase();
         if(file_ext =='png' || file_ext =='jpg'||file_ext =='gif' ){
-            User.findByIdAndUpdate(userId, {image: file_name},(err,userUpdate)=>{
-                 if(err){
-                        res.status(500).send({message:'Error al actualizar  el usuario'});
-                    }  else{
-                        if(!userUpdate){
-                            res.status(404).send({message:'No se ha podido actualizar el usuario'});
-                        }else{
-                            res.status(200).send({user:userUpdate});
-                        }
+            User.findById(userId,(err,userOld)=>{
+                if(err){
+                    res.status(500).send({message:'Error al actualizar  el usuario'});
+                }  else{
+                    if(!userOld){
+                        res.status(404).send({message:'No se ha podido actualizar el usuario'});
+                    }else{
+                        fileOld= userOld.image;        
+                        User.findByIdAndUpdate(userId, {image: file_name},(err,userUpdate)=>{
+                             if(err){
+                                    res.status(500).send({message:'Error al actualizar  el usuario'});
+                                }  else{
+                                    if(!userUpdate){
+                                        res.status(404).send({message:'No se ha podido actualizar el usuario'});
+                                    }else{
+                                        fs.exists('./uploads/users/'+ fileOld, function(exists){
+                                            if(exists){
+                                                fs.unlink('./uploads/users/'+ fileOld, function(err, result) {
+                                                    if (!err){
+                                                        res.status(200).send({user:userUpdate});
+                                                    }
+                                                  });
+                                            }else{
+                                                res.status(200).send({user:userUpdate});
+                                            }
+                                        });
+                                    }
+                                }
+                        });
                     }
+                }
             });
         }  else{
             res.status(200).send({message:'La extencion del archivo no es valido'});
@@ -129,6 +150,7 @@ function loginUser(req, res){
 function getImageFile(req,res){
     var imageFile = req.params.imageFile;
     var path_file = './uploads/users/'+ imageFile;
+    console.log('entro');
     fs.exists(path_file, function(exists){
         if(exists){
             res.sendFile(path.resolve(path_file));

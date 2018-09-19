@@ -10,7 +10,7 @@ var api= express.Router();
 var validation = require('./validation/allType');
 const expressJoi = require('express-joi-validator');
 
-api.get('/categories/:id?',[md_auth.ensureAuth,expressJoi(validation.getValidation)], CategoryController.getCategories);
+api.get('/categories/:id?', CategoryController.getCategories);
 api.put('/update-category/:id',[md_auth.ensureAuth, expressJoi(validation.updateValidation)], CategoryController.updateCategory);
 api.post('/add-category/',[md_auth.ensureAuth, expressJoi(validation.addValidation)], CategoryController.saveCategories);
 

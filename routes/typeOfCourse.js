@@ -9,7 +9,7 @@ var api= express.Router();
 
 
 
-api.get('/typeOfCourses/:id?',[md_auth.ensureAuth], TypeOfCourseController.getTypeOfCourse);
+api.get('/typeOfCourses/:id?', TypeOfCourseController.getTypeOfCourse);
 api.put('/update-typeOfCourse/:id',[md_auth.ensureAuth], TypeOfCourseController.updateTypeOfCourse);
 api.post('/add-typeOfCourse/',[md_auth.ensureAuth], TypeOfCourseController.saveTypeOfCourse);
 

@@ -5,7 +5,7 @@ var Category = require('../models/category');
 function getCategories(req, res){
     var categoryId = req.params.id;
     if(!categoryId){
-        var find = Category.find().sort('name');
+        var find = Category.find({active: true}).sort('name');
     }else{
         var find= Category.findOne({id: categoryId});
     }  

@@ -5,7 +5,7 @@ var Software = require('../models/software');
 function getSoftwares(req, res){
     var softwareId = req.params.id;
     if(!softwareId){
-        var find = Software.find().sort('name');
+        var find = Software.find({active: true}).sort('name');
     }else{
         var find= Software.findOne({id: softwareId});
     }  

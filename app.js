@@ -14,7 +14,7 @@ var software_routes= require('./routes/software');
 var typeOfCourse_routes= require('./routes/typeOfCourse');
 var course_routes= require('./routes/course');
 
-
+app.use(express.static(process.cwd() + '/public'));
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());

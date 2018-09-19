@@ -8,7 +8,7 @@ var md_auth = require('../middlewares/authenticated');
 var api= express.Router();
 
 
-api.get('/levels/:id?',[md_auth.ensureAuth], LevelController.getLevels);
+api.get('/levels/:id?', LevelController.getLevels);
 api.put('/update-level/:id',[md_auth.ensureAuth], LevelController.updateLevel);
 api.post('/add-level/',[md_auth.ensureAuth], LevelController.saveLevel);
 

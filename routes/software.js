@@ -9,7 +9,7 @@ var api= express.Router();
 
 
 
-api.get('/softwares/:id?',[md_auth.ensureAuth], SoftwareController.getSoftwares);
+api.get('/softwares/:id?', SoftwareController.getSoftwares);
 api.put('/update-software/:id',[md_auth.ensureAuth], SoftwareController.updateSoftware);
 api.post('/add-software/',[md_auth.ensureAuth], SoftwareController.saveSoftware);
 

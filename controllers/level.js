@@ -5,7 +5,7 @@ var Level = require('../models/level');
 function getLevels(req, res){
     var levelId = req.params.id;
     if(!levelId){
-        var find = Level.find().sort('name');
+        var find = Level.find({active: true}).sort('name');
     }else{
         var find= Level.findOne({id: levelId});
     }  

@@ -5,7 +5,7 @@ var TypeOfCourse = require('../models/typeOfCourse');
 function getTypeOfCourse(req, res){
     var typeId = req.params.id;
     if(!typeId){
-        var find = TypeOfCourse.find().sort('name');
+        var find = TypeOfCourse.find({active: true}).sort('name');
     }else{
         var find= TypeOfCourse.findOne({id: typeId});
     }  
