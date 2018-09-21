@@ -25,6 +25,30 @@ function getLessonByCourse(req, res){
         }        
     });   
 }
+function getLessonByID(req, res){
+    var lessonId = req.params.Id;
+    if(!lessonId){
+        var find = Lesson.find().sort('order');
+    }else{
+        var find= Lesson.findOne({id: lessonId});
+    }  
+    find.exec((err, lessons)=>{
+        if(err){
+            res.status(500).send({message: 'Error en la petición'});
+        }else{
+            if(!lessons){
+                res.status(404).send({message: 'No se encontraron clases'});
+            }else{
+                if(lessons.length > 0){
+                    res.status(200).send({lessons: lessons});
+                }else{
+                    res.status(404).send({message: 'No se encontraron clases'});
+                }
+                
+            }
+        }        
+    });   
+}
 function saveLesson(req, res){
      var lesson = new Lesson();
     var params = req.body;
@@ -76,5 +100,6 @@ function updateLesson(req, res){
 module.exports= {
     getLessonByCourse,
     saveLesson,
-    updateLesson
+    updateLesson,
+    getLessonByID
 };
