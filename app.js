@@ -6,13 +6,16 @@ var bodyParser = require('body-parser');
 var app = express();
 
 //cargar rutas
-var user_routes= require('./routes/user');
 var category_routes= require('./routes/category');
 var country_routes= require('./routes/country');
+var course_routes= require('./routes/course');
+var gallery_routes= require('./routes/gallery');
 var level_routes= require('./routes/level');
+var lesson_routes= require('./routes/lesson');
+var plan_routes= require('./routes/plan');
 var software_routes= require('./routes/software');
 var typeOfCourse_routes= require('./routes/typeOfCourse');
-var course_routes= require('./routes/course');
+var user_routes= require('./routes/user');
 
 app.use(express.static(process.cwd() + '/public'));
 
@@ -35,6 +38,9 @@ app.use('/api', level_routes);
 app.use('/api', software_routes);
 app.use('/api', typeOfCourse_routes);
 app.use('/api', course_routes);
+app.use('/api', gallery_routes);
+app.use('/api', lesson_routes);
+app.use('/api', plan_routes);
 
 
 module.exports= app;
